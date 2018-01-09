@@ -1,0 +1,20 @@
+
+# Lazy tools
+## that probably nobody will use
+### except for me...
+
+
+The function manifest (all in namespace of `lazytools`) is as follows:
+
+
+#### CoutTokens()
+Toggles between
+```cpp
+blah1 blah2 "blah3" 
+```
+and 
+```cpp
+std::cout <<  " blah1: " << blah1 <<  " blah2: " << blah2 <<  " 'blah3': " << "blah3" <<  std::endl;
+```
+so you just list variables you want to dump, hit a short key combo, and you're ready to continue
+debugging that script that is haunting you still.
