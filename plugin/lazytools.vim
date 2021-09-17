@@ -45,3 +45,39 @@ function! lazytools#CoutTokens()
     execute "norm! =="
 endfu
 
+function! lazytools#PrintLnTokens()
+    " toggles between
+    "    println(" blah1: $(blah1) blah2: $(blah2) blah3: $(blah3) ")
+    " and
+    "    blah1 blah2 blah3
+    "
+    let line=getline('.')
+
+    " turn into cout statement or reverse, depending on if
+    " line contains std::cout"
+    let newstr = ""
+    if line =~ "println("
+        let words = split(line," ")
+        for word in words
+            " if token has these things then it's not a variable by itself
+            if word =~ "println(" || word =~ ":" || word =~ "\""
+                continue
+            endif
+            let newstr .= substitute(substitute(substitute(word, "\\$", "", "g"), "(", "", "g"), ")", "", "g") . " "
+        endfor
+    else
+        let words = split(line)
+        let newstr .= "println(\" "
+        for word in words
+            " if there's a quote in the variable, replace it with single tick
+            let escword = substitute(word, "\"", "'", "g")
+            let newstr .= escword . ": $(" . word . ") "
+        endfor
+        let newstr .= "\")"
+    endif
+
+    :d
+    :-1put =newstr
+    execute "norm! =="
+endfu
+
